@@ -38,8 +38,6 @@ def create_load_balancer(nginx_port, heroku_api_key, pipeline_identifier):
     """
     Create Nginx load balancer config file with pipeline's production applications URLs.
     """
-    print(nginx_port, heroku_api_key, pipeline_identifier)
-
     heroku_api = HerokuApi(
         key=heroku_api_key,
     )
