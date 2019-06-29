@@ -12,6 +12,9 @@ from src.nginx import CreationNginxLoadBalancerConfigFile
 
 @click.group()
 def cli():
+    """
+    Command line interface root function.
+    """
     pass
 
 
@@ -32,7 +35,7 @@ def cli():
     '--pipeline-identifier',
     type=str,
     required=True,
-    help='Pipeline identifier to fetch applications for balancing.'
+    help='Pipeline identifier to fetch applications for balancing.',
 )
 def create_load_balancer(nginx_port, heroku_api_key, pipeline_identifier):
     """

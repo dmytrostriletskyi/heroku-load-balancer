@@ -1,0 +1,19 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t heroku-load-balancer . -f Dockerfile
+  - docker run -d -p 7979:7979 -v $PWD:/heroku-load-balancer -e PORT=7979 -e HEROKU_API_KEY=$HEROKU_API_KEY -e PIPELINE_IDENTIFIER='f64cf79b-79ba-4c45-8039-57c9af5d4508' --name heroku-load-balancer heroku-load-balancer
+
+script:
+  - docker exec -it heroku-load-balancer bash -c "radon cc src -nb --total-average"
+  - docker exec -it heroku-load-balancer bash -c "cat requirements.txt requirements-dev.txt | safety check --stdin"
+  - docker exec -it heroku-load-balancer bash -c "bash <(curl -s https://linters.io/sort-requirements) requirements.txt requirements-dev.txt"
+  - docker exec -it heroku-load-balancer bash -c "bash <(curl -s https://linters.io/isort-diff) src"
+  - docker exec -it heroku-load-balancer bash -c "flake8 src"
+
+env:
+  global:
+    secure: I8Rr7rQOfSFkq+VjYFThFfbBE2YIs4d5y3f9kJEAbZ51p61QWu8h4Opu1/fXGPFA5hCOS2sd8hywj+wVAaavd4GUuJurYbUd4rGVhkpQDCSYlUVr2eGHXGC+JgpyZ14LKsPOAFIfdwumU4ZrmAgTmKuduhiXo/erQk2g086ivBjqUvjG/yRH3ZehlMVY1MU4QIOZa1JrWgG/XmXXIxaFbQpwIeNQw3Q5i10PcG+X+6Yoeg+IrJ4mKIExKzrwrBS3I/JEWh37TAB2AkQN8Ez2u8AktM8uAyKALxL4mThhr9sCsIjfrNHJOYENDKvzLM1Y0XDURSclrngsvp3ihOTo23JSXemBPzbxfP2jvhFV0nDePVq88fVIrhxFNw+Kd1Gvew6hFa1PftNq825eDfLv+oWD8o3J9SU8innqxF6TH5d/UfIkI+Z3ovciedL4Jy7/bGTIqKk5Zc04GylCfEGxm1YFotNpE1LYunMcmE6pJQvs35DWryhJw3ryGOI3CWQLXuSq8pbR3czJpPeZlisJ1pU7vh79x8lZmWsxsza5jYMvPAle6JgInnm8oYkvwNc4fi5u9Y4Tb9Q4QSIc3nX9o62mH1fu6F/N5lefe6xoRkTjz2xkOkwEHtiAFKrXimyI6E/wscOk5NgenMqp0cm4Sk5C3vlLnvCc79/zycCeIpw=
