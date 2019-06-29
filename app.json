@@ -1,0 +1,13 @@
+{
+  "name": "heroku-load-balancer",
+  "env": {
+    "HEROKU_API_KEY": {
+      "description": "Heroku API key from the personal account.",
+      "required": true
+    },
+    "PIPELINE_IDENTIFIER": {
+      "description": "Pipeline identifier for creating load balancer.",
+      "required": true
+    }
+  }
+}
