@@ -1,0 +1,18 @@
+{
+  "name": "heroku-load-balancer",
+  "description": "Automatic (with no manual configuring) load balancer for your Heroku pipeline production applications.",
+  "repository": "https://github.com/dmytrostriletskyi/heroku-load-balancer",
+  "env": {
+    "HEROKU_API_KEY": {
+      "description": "Heroku API key from the personal account.",
+      "required": true
+    },
+    "PIPELINE_IDENTIFIER": {
+      "description": "Pipeline identifier for creating load balancer.",
+      "required": true
+    }
+  },
+  "logo": "https://habrastorage.org/webt/w3/fp/ep/w3fpepqfjjtumhnyul4ymts-qm8.png",
+  "keywords": ["nginx", "docker", "proxy", "balancing", "balancer"],
+  "stack": "container"
+}
