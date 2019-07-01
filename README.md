@@ -45,7 +45,7 @@ your application’s throughput at all.
 So, there are pros of the solution:
 
 * costs — the solution is cheaper. If you use the built-in approach and buy the `Performence` plan for your application (it means you will have 4 dynos — 4 server instances), it will cost you $100 per month. In case of the solution, you can buy 4 independent applications (`Hobby` plan — $7 per month per instance), setup an indential software, put the load balancer before them (also, $7 per month) — it will cost you $35 (7$x5) — ~3 times cheaper,
-* CPU-bound applications — as mentioned above, `Heroku` cannot completely fit you in this case. You can even buy the `Performance` plan, but it will not increase your `CPU` performance too much to pay a few hundred dollars for this. But if you create tens of the instances with identical software and put a load balancer before them, it will solve your problems.
+* CPU-bound applications — as mentioned above, `Heroku` cannot completely fit you in this case. You can even buy the `Performance` plan, but it will not increase your `CPU` performance too much to pay a few hundred dollars for this. But if you create tens of the instances with identical software and put a load balancer before them, it may solve your problems.
 
 And cons of the solution. Keep in mind that this solution requires multiple, technically independent applications. 
 The applications do not behave as a single application:
