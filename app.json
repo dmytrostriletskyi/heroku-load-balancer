@@ -1,6 +1,6 @@
 {
   "name": "heroku-load-balancer",
-  "description": "Automatic (with no manual configuring) load balancer for your Heroku pipeline production applications.",
+  "description": "Cheaper than built-in, the load balancer for your Heroku pipeline applications. The way to host CPU-bound",
   "repository": "https://github.com/dmytrostriletskyi/heroku-load-balancer",
   "env": {
     "HEROKU_API_KEY": {
