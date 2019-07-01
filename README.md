@@ -1,4 +1,4 @@
-Automatic (with no manual configuring) load balancer for your Heroku pipeline production applications.
+Cheaper than built-in, the load balancer for your Heroku pipeline applications. The way to host CPU-bound
 
 [![Release](https://img.shields.io/github/release/dmytrostriletskyi/heroku-load-balancer.svg)](https://github.com/dmytrostriletskyi/heroku-load-balancer/releases)
 [![Build Status](https://travis-ci.com/dmytrostriletskyi/heroku-load-balancer.svg?branch=develop)](https://travis-ci.com/dmytrostriletskyi/heroku-load-balancer)
@@ -25,9 +25,39 @@ thus improving overall application availability and responsiveness.
 
 ### Motivation
 
-[Heroku](https://heroku.com) does not have `load balancer` paid feature to balancing your applications. It is the drawback
-comparing to [Digital Ocean](https://www.digitalocean.com/products/load-balancer) and [Amazon Web Services](https://aws.amazon.com/elasticloadbalancing/)
-which do have it.
+Heroku has [built-in load balancer](https://devcenter.heroku.com/articles/how-heroku-works#http-routing):
+
+```
+Heroku’s HTTP routers distribute incoming requests for your application across your 
+running web dynos. So scaling an app’s capacity to handle web traffic involves 
+scaling the number of web dynos. A random selection algorithm is used for HTTP request 
+load balancing across web dynos - and this routing handles both HTTP and HTTPS traffic.
+```
+
+But at the same time, built-in [load balancer can't help if your application is CPU-bound](https://devcenter.heroku.com/articles/optimizing-dyno-usage#cpu).
+
+```
+If you are processing individual requests slowly due to CPU or other shared resource 
+constraints (such as database), then optimizing concurrency on the dyno may not help 
+your application’s throughput at all.
+```
+
+So, there are pros of the solution:
+
+* costs — the solution is cheaper. If you use the built-in approach and buy the `Performence` plan for your application (it means you will have 4 dynos — 4 server instances), it will cost you $100 per month. In case of the solution, you can buy 4 independent applications (`Hobby` plan — $7 per month per instance), setup an indential software, put the load balancer before them (also, $7 per month) — it will cost you $35 (7$x5) — ~3 times cheaper,
+* CPU-bound applications — as mentioned above, `Heroku` cannot completely fit you in this case. You can even buy the `Performance` plan, but it will not increase your `CPU` performance too much to pay a few hundred dollars for this. But if you create tens of the instances with identical software and put a load balancer before them, it may solve your problems.
+
+And cons of the solution. Keep in mind that this solution requires multiple, technically independent applications. 
+The applications do not behave as a single application:
+
+* any add-ons must be manually attached to each app — makes operations more complex,
+* all logging is spread across apps — makes debugging harder,
+* performance metrics are spread across the apps — makes understanding app behavior harder,
+* the `Heroku platform` does not operate them as a single app (could cause downtime during deployments or daily dyno cycling)
+when the single load balancer `Hobby` dyno cycles (restarts) each day or on deployment, the entire app will go offline temporarily,
+* added request latency (another two HTTP hops in front of the `Heroku router`).
+
+Big thank to [@mars](https://github.com/mars) (works at `Heroku`) who provided the information above in [issue #6](https://github.com/dmytrostriletskyi/heroku-load-balancer/issues/6).
 
 ### How to use
 
