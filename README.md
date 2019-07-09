@@ -63,7 +63,7 @@ Big thank to [@mars](https://github.com/mars) (works at `Heroku`) who provided t
 
 1. Press the button named `Deploy to Heroku` below.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/dmytrostriletskyi/heroku-load-balancer/tree/create-docs)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/dmytrostriletskyi/heroku-load-balancer/tree/develop)
 
 2. Enter the name for the application which will host the load balancer. Choose the region and add to the pipeline if needed.
 
