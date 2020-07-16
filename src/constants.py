@@ -16,6 +16,9 @@ http <
 {upstream_server_localhosts}
     >
 
+    absolute_redirect off;
+    port_in_redirect off;
+
     server <
         listen {port};
 
