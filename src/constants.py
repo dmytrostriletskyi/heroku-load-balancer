@@ -16,11 +16,20 @@ http <
 {upstream_server_localhosts}
     >
 
+    absolute_redirect off;
+    port_in_redirect off;
+
     server <
         listen {port};
 
         location / <
             proxy_pass http://main;
+            proxy_next_upstream error timeout invalid_header http_502 http_503 http_504;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $host;
         >
     >
 
